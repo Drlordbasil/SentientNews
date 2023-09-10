@@ -39,7 +39,8 @@ class NewsAggregator:
         nlp = pipeline("article", framework="tf")
         for article in self.content_database:
             extracted_content = nlp(article.main_text)
-            extracted_text = " ".join([sentence['text'] for sentence in extracted_content])
+            extracted_text = " ".join([sentence['text']
+                                      for sentence in extracted_content])
             article.main_text = extracted_text
 
     def topic_extraction(self):
@@ -91,7 +92,8 @@ class NewsAggregator:
                     publication_date = item.pubDate.get_text()
                     main_text = item.description.get_text()
 
-                    article = Article(title, author, publication_date, main_text)
+                    article = Article(
+                        title, author, publication_date, main_text)
                     self.content_database.append(article)
             else:
                 raise ValueError(f"Error accessing RSS feed: {feed_url}")
@@ -116,7 +118,8 @@ if __name__ == "__main__":
     aggregator.sentiment_analysis()
 
     user = User()
-    recommended_articles = aggregator.content_recommendations(user.reading_history)
+    recommended_articles = aggregator.content_recommendations(
+        user.reading_history)
     social_media_posts = aggregator.social_media_integration()
     advertising_placements = aggregator.advertising_integration()
 
